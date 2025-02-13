@@ -1,0 +1,7 @@
+train: /networkhome/WMGDS/souval_g/data_day/images/train
+val: /networkhome/WMGDS/souval_g/data_day/images/val
+test: /networkhome/WMGDS/souval_g/data_day/images/test
+
+nc: 5
+
+names: ['Pedestrian', 'Cyclist', 'Car', 'Truck', 'Tram']

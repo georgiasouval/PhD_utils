@@ -1,0 +1,37 @@
+======================================================================================== initialise conda ==========================================================================================================================
+/home/souval_g_WMGDS.WMG.WARWICK.AC.UK/anaconda3/bin/conda init
+
+====================================================================================================================================================================================================================================
+wandb.init(
+            project="RAW-object-detection",  # Your project name
+            name=opt.name,  # You can set the experiment name from the CLI args or give a custom name
+            config=vars(opt),  # Log all the arguments as part of the experiment
+            save_code=True,  # Optionally save the code along with the experiment
+        )
+        
+wandb.watch(model, log="all", log_freq=100) 
+
+
+python train_dual.py --workers 8 --device 0 --batch 8 --data data/dataset.yaml --img 640 --cfg models/detect/yolov9-c.yaml --weights '' --name test_friday --hyp hyp.scratch-high.yaml --min-items 0 --epochs 5 --close-mosaic 15
+
+=====================================================================================================================================================================================================================================
+utils/plots.py
+
+change this :
+
+w, h = self.font.getsize(label)  # text width, height
+
+to this:
+bbox = self.font.getbbox(label)  # text bounding box
+w, h = bbox[2] - bbox[0], bbox[3] - bbox[1]  # text width, height
+
+=====================================================================================================================================================================================================================================
+
+
+
+
+python train_dual.py --workers 8 --device 0 --batch 8 --data /home/souval_g_WMGDS.WMG.WARWICK.AC.UK/Desktop/data_raw_test --img 640 --cfg models/detect/yolov9-c.yaml --weights '' --name test_4_12 --hyp hyp.scratch-high.yaml --min-items 0 --epochs 5 --close-mosaic 15
+
+=====================================================================================================================================================================================================================================
+
+python val_dual.py --data /networkhome/WMGDS/souval_g/data_day/dataset.yaml --img 1280 --batch 32 --conf 0.001 --iou 0.7 --device 0 --weights '/networkhome/WMGDS/souval_g/exp9_day/runs/train/exp9_day/weights/best.pt' --save-json --name exp9_day_val
