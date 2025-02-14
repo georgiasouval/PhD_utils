@@ -1,23 +1,30 @@
-#!/bin/bash
+# download latest vs code
+wget -O vscode.tar.gz "https://update.code.visualstudio.com/latest/linux-x64/stable"
 
-mkdir -p $HOME/vscode
-mkdir -p $HOME/bin  # Ensure the bin directory exists
+# extract new version
+mkdir -p ~/vscode_latest
+tar -xzf vscode.tar.gz -C ~/vscode_latest --strip-components=1
 
-# Extract the .deb package
-dpkg-deb -x /home/souval_g_WMGDS.WMG.WARWICK.AC.UK/Downloads/code_1.97.1-1739197498_amd64.deb $HOME/vscode
-dpkg-deb --control /home/souval_g_WMGDS.WMG.WARWICK.AC.UK/Downloads/code_1.97.1-1739197498_amd64.deb $HOME/vscode/DEBIAN
+# replace old version
+rm -rf /home/souval_g_WMGDS.WMG.WARWICK.AC.UK/bin/code
+mv ~/vscode_latest /home/souval_g_WMGDS.WMG.WARWICK.AC.UK/bin/code
 
-# Create a script to run VS Code
-echo '#!/bin/bash' > $HOME/bin/code
-echo 'exec $HOME/vscode/usr/share/code/code --no-sandbox "$@"' >> $HOME/bin/code
+# verify the update
+code --version
+#if it doesn't work 
+code --no-sandbox
 
-# Make it executable
-chmod +x $HOME/bin/code
 
-# Add to PATH
-echo 'export PATH=$HOME/bin:$PATH' >> $HOME/.bashrc
-source $HOME/.bashrc
-hash -r  # Refresh shell command lookup
+# (optional) if there issues, while running 'code', update the path
+echo 'export PATH="/home/souval_g_WMGDS.WMG.WARWICK.AC.UK/bin/code/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
 
-# Run VS Code
-code
+# ========================================================================================
+wget -O vscode.tar.gz "https://update.code.visualstudio.com/latest/linux-x64/stable"
+mkdir -p ~/vscode_latest
+tar -xzf vscode.tar.gz -C ~/vscode_latest --strip-components=1
+rm -rf /home/souval_g_WMGDS.WMG.WARWICK.AC.UK/bin/code
+mv ~/vscode_latest /home/souval_g_WMGDS.WMG.WARWICK.AC.UK/bin/code
+code --version
+
+
